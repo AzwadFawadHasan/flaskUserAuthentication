@@ -25,7 +25,7 @@ JOBS = [
         'id': 3,
         'title': 'Data Scientist',
         'location': 'Dhaka, Bangladesh',
-       # 'salary': '144000'
+        #'salary': '144000'
 
     }
 
