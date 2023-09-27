@@ -1,4 +1,4 @@
-
+from database import load_jobs_from_db, load_job_from_db
 
 #module flask importing a class called Flask
 from flask import Flask, render_template, jsonify
@@ -6,39 +6,24 @@ from flask import Flask, render_template, jsonify
 app = Flask(__name__) #creating a flask application and giving it a name
 
 
-JOBS = [
-    {
-        'id':1,
-        'title': 'Data Analyst',
-        'location': 'Dhaka, Bangladesh',
-        'salary': '100000'
-
-    },
-    {
-        'id': 2,
-        'title': 'Jr. Data Analyst',
-        'location': 'Dhaka, Bangladesh',
-        'salary': '10000'
-
-    },
-    {
-        'id': 3,
-        'title': 'Data Scientist',
-        'location': 'Dhaka, Bangladesh',
-        #'salary': '144000'
-
-    }
-
-]
 #creating a route
 #@ is a decorator, provided by librarires to provide some advanced functionalities
+jobs = load_jobs_from_db()
 @app.route("/")
 def hello_world():
-    return render_template('home.html', jobs=JOBS)
+    jobs = load_jobs_from_db()
+    return render_template('home.html', jobs=jobs)
 
 @app.route("/api/jobs")
 def list_jobs():
-    return jsonify(JOBS)
+    return jsonify(jobs)
+
+@app.route("/job/<id>")
+def show_job(id):
+    job = load_job_from_db(id)
+    print("JOB is ", job)
+    return jsonify(job)
+
 """
 When the script is run, __name__ is set to "__main__" in that script.
 When the script is imported as a module into another script, __name__ is set to the script's name 

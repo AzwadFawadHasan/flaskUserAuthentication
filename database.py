@@ -38,3 +38,23 @@ def load_jobs_from_db():
         #print(jobs)
         return jobs
 
+def load_job_from_db(id):
+    # with engine.connect() as conn:
+    #     result = conn.execute(text("select * from jobs where id = :id"), id=id)
+    #     job = [row._asdict() for row in result]
+    #
+    #     #print(jobs)
+    #     if len(job) == 0:
+    #         return None
+    #     else:
+    #         return job
+    with engine.connect() as conn:
+        query = text("select * from jobs where id = :id")  # Define the query with a named parameter
+        result = conn.execute(query, {'id': id})  # Bind the parameter using a dictionary
+
+        job = [row._asdict() for row in result]
+
+        if len(job) == 0:
+            return None
+        else:
+            return job
